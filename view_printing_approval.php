@@ -1,0 +1,46 @@
+<?php
+require 'includes/auth.php';
+require 'includes/db.php';
+
+$stmt = $pdo->query("SELECT * FROM printing_approval ORDER BY entry_date DESC");
+$entries = $stmt->fetchAll();
+
+require 'includes/header.php';
+?>
+
+
+<div class="container my-5">
+    <h2>Printing Approval Entries</h2>
+    <a href="add_printing_approval.php" class="btn btn-success mb-3">Add New Entry</a>
+
+    <?php if (count($entries) === 0): ?>
+        <p>No entries found.</p>
+    <?php else: ?>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product Name</th>
+                    <th>Brand Name</th>
+                    <th>Printing Company</th>
+                    <th>Checked By</th>
+                    <th>Status</th>
+                    <th>Entry Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($entries as $entry): ?>
+                <tr>
+                    <td><?= htmlspecialchars($entry['id']) ?></td>
+                    <td><?= htmlspecialchars($entry['product_name']) ?></td>
+                    <td><?= htmlspecialchars($entry['brand_name']) ?></td>
+                    <td><?= htmlspecialchars($entry['printing_company']) ?></td>
+                    <td><?= htmlspecialchars($entry['checked_by']) ?></td>
+                    <td><?= htmlspecialchars($entry['status']) ?></td>
+                    <td><?= htmlspecialchars(date('d-m-Y', strtotime($entry['entry_date']))) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</div>
