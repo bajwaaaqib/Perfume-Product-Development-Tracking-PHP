@@ -1,7 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
---
+-- aaqib_npd
 -- Host: localhost:3306
 -- Generation Time: Aug 05, 2025 at 04:32 AM
 -- Server version: 5.7.23-23
@@ -47,29 +47,6 @@ CREATE TABLE `perfume_products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `perfume_products`
---
-
-INSERT INTO `perfume_products` (`id`, `product_name`, `brand_name`, `batch_no`, `budget`, `fragrance_type`, `target_audience`, `design_style`, `box_packaging_type`, `bottle_coating`, `box_finishing`, `created_by`, `created_at`, `status`, `color`, `size`) VALUES
-(9, ' 400ml Jawhara AF', 'SHANGANI', 'SHGCK0825', '', 'Floral', 'Unisex', 'Oriental', 'Metallic Board', '', 'Glossy', 1, '2025-08-04 08:42:17', 'Pending', NULL, NULL),
-(10, '400ml Mulki AF', 'SHANGANI', 'SHGCK0825', '', 'Floral', 'Unisex', 'Oriental', 'Metallic Board', '', 'Glossy', 1, '2025-08-04 08:43:27', 'Pending', NULL, NULL),
-(11, '400ml Rashida AF', 'SHANGANI', 'SHGCK0825', '', 'Floral', 'Unisex', 'Oriental', 'Metallic Board', '', 'Glossy', 1, '2025-08-04 08:44:17', 'Pending', NULL, NULL),
-(12, '400ml Mariya AF', 'SHANGANI', 'SHGCK0825', '', 'Floral', 'Unisex', 'Oriental', 'Metallic Board', '', 'Glossy', 1, '2025-08-04 08:44:52', 'Pending', NULL, NULL),
-(13, '300ml Jawhara AF', 'ARD PERFUMES', 'ARDCK0825', '', 'Floral', 'Unisex', 'Oriental', 'Metallic Board', '', 'Glossy', 1, '2025-08-04 08:46:19', 'Approved Internally', NULL, NULL),
-(14, '300ml Janan AF', 'ARD PERFUMES', 'ARDCK0825', '', 'Floral', 'Unisex', 'Oriental', 'Metallic Board', '', 'Glossy', 1, '2025-08-04 08:46:51', 'Approved Internally', NULL, NULL),
-(15, '300ml Mulki AF', 'ARD PERFUMES', 'ARDCK0825', '', 'Floral', 'Unisex', 'Oriental', 'Metallic Board', '', 'Glossy', 1, '2025-08-04 08:47:22', 'Approved Internally', NULL, NULL),
-(16, '300ml Rashida AF', 'ARD PERFUMES', 'ARDCK0825', '', 'Fresh', 'Unisex', 'Oriental', 'Metallic Board', '', 'Glossy', 1, '2025-08-04 08:48:01', 'Approved Internally', NULL, NULL),
-(17, '300ml Mariya AF', 'ARD PERFUMES', 'ARDCK0825', '', 'Oriental', 'Unisex', 'Oriental', 'Metallic Board', '', 'Glossy', 1, '2025-08-04 08:48:44', 'Approved Internally', 'Pink', '80x80x255'),
-(18, 'Zuhran EDP', 'MARCO LUCIO', 'ARDM072025', '', 'Fresh', 'Men', 'Modern', 'Metallic Board', 'Glossy', 'Glossy', 1, '2025-08-04 08:50:39', 'Completion', NULL, NULL),
-(19, 'Firdan EDP', 'MARCO LUCIO', 'ARDM072025', '', 'Citrus', 'Men', 'Modern', 'Metallic Board', 'Glossy', 'Glossy', 1, '2025-08-04 08:51:33', 'Completion', NULL, NULL),
-(20, 'Odette EDP', 'MARCO LUCIO', 'ARDM072025', '', 'Floral', 'Women', 'Modern', 'Foodboard', 'Half Coating', 'Matte', 1, '2025-08-04 08:52:20', 'Completion', NULL, NULL),
-(21, 'Bleu de Patron EDP', 'MARCO LUCIO', 'MARM0825', '', 'Citrus', 'Men', 'Modern', 'Metallic Board', 'Glossy', 'Glossy', 1, '2025-08-04 08:54:12', 'Tasks To Do', NULL, NULL),
-(22, 'Secret Men EDP', 'ARD PERFUMES', 'ARDM0825', '', 'Woody', 'Men', 'Modern', 'Metallic Board', 'Glossy', 'Glossy', 1, '2025-08-04 08:55:10', 'Tasks To Do', NULL, NULL),
-(23, 'Bint Al Arab EDP', 'ARD PERFUMES', 'ARDCK0825', '', 'Floral', '', 'Oriental', 'Metallic Board', 'Transparent', 'Glossy', 1, '2025-08-04 08:56:16', 'Tasks To Do', NULL, NULL);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `printing_approval`
 --
 
@@ -87,8 +64,6 @@ CREATE TABLE `printing_approval` (
 -- Dumping data for table `printing_approval`
 --
 
-INSERT INTO `printing_approval` (`id`, `product_name`, `brand_name`, `printing_company`, `checked_by`, `status`, `entry_date`) VALUES
-(2, 'Jawhara 6ml', 'ARD PERFUMES', 'Al Ravi', 'Aaqib', 'Approved', '2025-08-05 09:00:31');
 
 -- --------------------------------------------------------
 
@@ -138,20 +113,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `email`, `password`, `invite_token`, `role`, `created_at`) VALUES
-(1, 'admin@example.com', '$2y$10$mz5xreJ6GUmMLRh1QNTRdu3WayciVabzoMZwIxJwT8icpb1bqOpFu', NULL, 'admin', '2025-08-04 06:13:06'),
-(2, 'aaqibbajwa0@gmail.com', NULL, '30fcfd2fb093e7e9019984912b2799af', 'user', '2025-08-04 06:14:41'),
-(3, 'bajwaaaqib@gmail.com', NULL, 'e75e5742efad198007cf1b345ba18244', 'user', '2025-08-04 08:17:59'),
-(4, 'aaqib@example.com', '$2y$10$E7ggXDNoFkzeHRMeK1q.ZOuM6WLMKEJbruBDfg/YKAQUj.BWI7eA.', NULL, 'user', '2025-08-04 10:13:00'),
-(5, 'info@ardperfumes.com', '$2y$10$3UaEwWu4Qj/VGaG2AHzzpOSqbVYCErcnonVxEKhZLcYtt1HhffJQK', NULL, 'admin', '2025-08-04 11:08:34');
-
---
--- Indexes for dumped tables
---
-
 --
 -- Indexes for table `perfume_products`
 --
