@@ -2,13 +2,12 @@
 require 'includes/auth.php';
 require 'includes/db.php';
 
+// Fetch newest entries first
 $stmt = $pdo->query("SELECT * FROM Product_quality_check ORDER BY entry_date DESC");
 $entries = $stmt->fetchAll();
 
 require 'includes/header.php';
 ?>
-
-
 
 <div class="container my-5">
     <h2>Product Quality Check Entries</h2>
@@ -20,7 +19,7 @@ require 'includes/header.php';
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>#</th> <!-- Serial Number -->
                     <th>Product Name</th>
                     <th>Brand Name</th>
                     <th>Printing Company</th>
@@ -31,9 +30,10 @@ require 'includes/header.php';
                 </tr>
             </thead>
             <tbody>
+                <?php $serial = 1; ?>
                 <?php foreach ($entries as $entry): ?>
                 <tr>
-                    <td><?= htmlspecialchars($entry['id']) ?></td>
+                    <td><?= $serial++ ?></td>
                     <td><?= htmlspecialchars($entry['product_name']) ?></td>
                     <td><?= htmlspecialchars($entry['brand_name']) ?></td>
                     <td><?= htmlspecialchars($entry['printing_company']) ?></td>
@@ -47,4 +47,3 @@ require 'includes/header.php';
         </table>
     <?php endif; ?>
 </div>
-
