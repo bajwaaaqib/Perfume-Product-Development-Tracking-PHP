@@ -1,0 +1,35 @@
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255),
+    invite_token VARCHAR(255),
+    role ENUM('admin', 'user') DEFAULT 'user',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE perfume_products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(255),
+    brand_name VARCHAR(255),
+    batch_no VARCHAR(100),
+    budget VARCHAR(100),
+    fragrance_type TEXT,
+    target_audience TEXT,
+    design_style TEXT,
+    box_packaging_type TEXT,
+    bottle_coating TEXT,
+    box_finishing TEXT,
+    created_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (created_by) REFERENCES users(id)
+);
+
+CREATE TABLE product_tasks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    task_name VARCHAR(255),
+    status ENUM('to_do', 'pending', 'in_progress', 'approved_internally', 'printing_approval', 'completion') DEFAULT 'to_do',
+    completion_percent INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES perfume_products(id) ON DELETE CASCADE
+);

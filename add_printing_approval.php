@@ -15,16 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $printing_company = $_POST['printing_company'] ?? '';
     $checked_by = $_POST['checked_by'] ?? '';
     $status = $_POST['status'] ?? '';
+    $entry_date = $_POST['entry_date'] ?? date('Y-m-d');
 
     if (!$product_name || !$brand_name) {
         $error = 'Product Name and Brand Name are required.';
     } else {
         $stmt = $pdo->prepare("INSERT INTO printing_approval (
-            product_name, brand_name, printing_company, checked_by, status
-        ) VALUES (?, ?, ?, ?, ?)");
+            product_name, brand_name, printing_company, checked_by, status, entry_date
+        ) VALUES (?, ?, ?, ?, ?, ?)");
 
         $result = $stmt->execute([
-            $product_name, $brand_name, $printing_company, $checked_by, $status
+            $product_name, $brand_name, $printing_company, $checked_by, $status, $entry_date
         ]);
 
         if ($result) {
@@ -39,12 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require 'includes/header.php';
 ?>
 
-
 <head>
 <style>
 body {
-            background: linear-gradient(135deg, #6f42c1, #6610f2);
-        }
+    background: linear-gradient(135deg, #6f42c1, #6610f2);
+}
 </style>
 </head>
 
@@ -108,6 +108,11 @@ body {
               </select>
           </div>
 
+          <div class="col-md-6">
+              <label for="entry_date" class="form-label">Entry Date</label>
+              <input type="date" name="entry_date" id="entry_date" class="form-control" value="<?= htmlspecialchars($_POST['entry_date'] ?? date('Y-m-d')) ?>">
+          </div>
+
           <div class="col-12 mt-3 d-flex justify-content-between">
               <button type="submit" class="btn btn-primary">Add Entry</button>
               <a href="view_printing_approval.php" class="btn btn-secondary">View Entries</a>
@@ -116,6 +121,4 @@ body {
     </div>
   </div>
 </div>
-
 </body>
-

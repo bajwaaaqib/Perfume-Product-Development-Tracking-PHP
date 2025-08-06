@@ -1,9 +1,23 @@
 <?php
+// Developed by Aaqib Bajwa | www.aaqibbajwa.com | Email: info@aaqibbajwa.com
+
+// Start output buffering and session BEFORE any output
+ob_start();
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require 'includes/db.php';
+
+// Redirect to dashboard if already logged in
+if (isset($_SESSION['user'])) {
+    header('Location: dashboard.php');
+    exit;
+}
 
 $error = '';
 
+// Handle login submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->execute([$_POST['email']]);

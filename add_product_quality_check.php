@@ -6,7 +6,7 @@ $success = '';
 $error = '';
 
 $brandOptions = ['ARD PERFUMES', 'MARCO LUCIO', 'SHANGANI', 'AL FATEH'];
-$checkedByOptions = ['Aaqib', 'CEO', 'Aziz'];  // example names
+$checkedByOptions = ['Aaqib', 'CEO', 'Aziz'];
 $statusOptions = ['Pending', 'Approved', 'Rejected', 'In Progress'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -16,16 +16,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $presented_by = $_POST['presented_by'] ?? '';
     $checked_by = $_POST['checked_by'] ?? '';
     $status = $_POST['status'] ?? '';
+    $entry_date = $_POST['entry_date'] ?? date('Y-m-d'); // default to today if not selected
 
     if (!$product_name || !$brand_name) {
         $error = 'Product Name and Brand Name are required.';
     } else {
         $stmt = $pdo->prepare("INSERT INTO Product_quality_check (
-            product_name, brand_name, printing_company, presented_by, checked_by, status
-        ) VALUES (?, ?, ?, ?, ?, ?)");
+            product_name, brand_name, printing_company, presented_by, checked_by, status, entry_date
+        ) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         $result = $stmt->execute([
-            $product_name, $brand_name, $printing_company, $presented_by, $checked_by, $status
+            $product_name, $brand_name, $printing_company, $presented_by, $checked_by, $status, $entry_date
         ]);
 
         if ($result) {
@@ -111,6 +112,11 @@ body {
                       <option value="<?= htmlspecialchars($option) ?>" <?= $sel ?>><?= htmlspecialchars($option) ?></option>
                   <?php endforeach; ?>
               </select>
+          </div>
+
+          <div class="col-md-6">
+              <label for="entry_date" class="form-label">Entry Date</label>
+              <input type="date" name="entry_date" id="entry_date" class="form-control" value="<?= htmlspecialchars($_POST['entry_date'] ?? date('Y-m-d')) ?>">
           </div>
 
           <div class="col-12 mt-3 d-flex justify-content-between">

@@ -103,40 +103,53 @@ body {
     <h2 class="mb-4 text-center">Product Development Tracking</h2>
 
     <div class="row">
-        <?php foreach ($status_groups as $status => $tasks): ?>
-            <div class="col-md-4 card-column">
-                <div class="card h-100 shadow-sm border-primary rounded-4">
-                    <div class="card-header text-white text-center fw-bold <?= 'status-' . str_replace(' ', '-', $status) ?>">
-                        <?= htmlspecialchars($status) ?>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <?php if (count($tasks) > 0): ?>
-                            <?php foreach ($tasks as $task): ?>
-                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap gap-2">
-                                    <div class="flex-grow-1">
-                                        <strong><?= htmlspecialchars($task['product_name']) ?></strong><br>
-											<small class="text-muted fst-italic"><?= htmlspecialchars($task['brand_name']) ?></small>
-									</div>
-                                    <form method="POST" action="update_status.php" class="m-0">
-                                        <input type="hidden" name="product_id" value="<?= $task['id'] ?>">
-                                        <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
-                                            <?php foreach ($statuses as $option): ?>
-                                                <option value="<?= $option ?>" <?= $option === $task['status'] ? 'selected' : '' ?>>
-                                                    <?= $option ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </form>
-                                </li>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <li class="list-group-item text-muted text-center fst-italic">No tasks available</li>
-                        <?php endif; ?>
-                    </ul>
+    <?php foreach ($status_groups as $status => $tasks): ?>
+        <div class="col-md-4 card-column">
+            <div class="card h-100 shadow-sm border-primary rounded-4">
+                <div class="card-header text-white text-center fw-bold <?= 'status-' . str_replace(' ', '-', $status) ?>">
+                    <?= htmlspecialchars($status) . ' (' . count($tasks) . ')' ?>
                 </div>
+                <ul class="list-group list-group-flush">
+                    <?php
+                    // Limit tasks to 6 only if status is Completion
+                    $display_tasks = ($status === 'Completion') ? array_slice($tasks, 0, 6) : $tasks;
+                    ?>
+
+                    <?php if (count($display_tasks) > 0): ?>
+                        <?php foreach ($display_tasks as $task): ?>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                <div class="flex-grow-1">
+                                    <strong><?= htmlspecialchars($task['product_name']) ?></strong><br>
+                                    <small class="text-muted fst-italic"><?= htmlspecialchars($task['brand_name']) ?></small>
+                                </div>
+                                <form method="POST" action="update_status.php" class="m-0">
+                                    <input type="hidden" name="product_id" value="<?= $task['id'] ?>">
+                                    <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                                        <?php foreach ($statuses as $option): ?>
+                                            <option value="<?= $option ?>" <?= $option === $task['status'] ? 'selected' : '' ?>>
+                                                <?= $option ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </form>
+                            </li>
+                        <?php endforeach; ?>
+
+                        <?php if ($status === 'Completion' && count($tasks) > 6): ?>
+                            <li class="list-group-item text-center fst-italic text-primary">
+                                And <?= count($tasks) - 6 ?> more tasks hidden...
+                            </li>
+                        <?php endif; ?>
+
+                    <?php else: ?>
+                        <li class="list-group-item text-muted text-center fst-italic">No tasks available</li>
+                    <?php endif; ?>
+                </ul>
             </div>
-        <?php endforeach; ?>
-    </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+
 </div>
 
 <?php require_once 'includes/footer.php'; ?>
