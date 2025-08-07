@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$db = 'marcoluc_npd';
-$user = 'marcoluc_npd';
-$pass = 'npD183#1AaQib';
+$db = '';
+$user = 'root';
+$pass = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
@@ -11,3 +11,4 @@ try {
     die("DB Connection Failed: " . $e->getMessage());
 }
 ?>
+
