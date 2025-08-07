@@ -90,6 +90,7 @@
           <li class="nav-item"><a class="nav-link" href="add_product.php">Add Task</a></li>
           <li class="nav-item"><a class="nav-link" href="add_product_quality_check.php">Quality Check</a></li>
           <li class="nav-item"><a class="nav-link" href="add_printing_approval.php">Printing Approval</a></li>
+          <li class="nav-item"><a class="nav-link" href="weekly_reports.php">Report</a></li>
           <li class="nav-item"><a class="nav-link" href="create_user.php">Add User</a></li>
           <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
         <?php else: ?>

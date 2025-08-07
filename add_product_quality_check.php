@@ -11,27 +11,28 @@ $statusOptions = ['Pending', 'Approved', 'Rejected', 'In Progress'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_name = $_POST['product_name'] ?? '';
+    $batch_number = $_POST['batch_number'] ?? '';
     $brand_name = $_POST['brand_name'] ?? '';
     $printing_company = $_POST['printing_company'] ?? '';
     $presented_by = $_POST['presented_by'] ?? '';
     $checked_by = $_POST['checked_by'] ?? '';
     $status = $_POST['status'] ?? '';
-    $entry_date = $_POST['entry_date'] ?? date('Y-m-d'); // default to today if not selected
+    $entry_date = $_POST['entry_date'] ?? date('Y-m-d');
 
     if (!$product_name || !$brand_name) {
         $error = 'Product Name and Brand Name are required.';
     } else {
         $stmt = $pdo->prepare("INSERT INTO Product_quality_check (
-            product_name, brand_name, printing_company, presented_by, checked_by, status, entry_date
-        ) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            product_name, batch_number, brand_name, printing_company, presented_by, checked_by, status, entry_date
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
         $result = $stmt->execute([
-            $product_name, $brand_name, $printing_company, $presented_by, $checked_by, $status, $entry_date
+            $product_name, $batch_number, $brand_name, $printing_company, $presented_by, $checked_by, $status, $entry_date
         ]);
 
         if ($result) {
             $success = 'Entry added successfully!';
-            $_POST = []; // Clear form
+            $_POST = [];
         } else {
             $error = 'Failed to add entry.';
         }
@@ -66,6 +67,11 @@ body {
           <div class="col-md-6">
               <label for="product_name" class="form-label">Product Name *</label>
               <input type="text" name="product_name" id="product_name" required class="form-control" value="<?= htmlspecialchars($_POST['product_name'] ?? '') ?>">
+          </div>
+
+          <div class="col-md-6">
+              <label for="batch_number" class="form-label">Batch Number</label>
+              <input type="text" name="batch_number" id="batch_number" class="form-control" value="<?= htmlspecialchars($_POST['batch_number'] ?? '') ?>">
           </div>
 
           <div class="col-md-6">

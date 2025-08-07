@@ -27,11 +27,13 @@ require 'includes/header.php';
                     <tr>
                         <th>#</th>
                         <th>Product</th>
+                        <th>Batch No.</th>
                         <th>Brand</th>
                         <th>Printing Co.</th>
                         <th>Checked By</th>
                         <th>Status</th>
                         <th>Entry Date</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,12 +42,15 @@ require 'includes/header.php';
                         <tr>
                             <td><?= $serial++ ?></td>
                             <td><?= htmlspecialchars($entry['product_name']) ?></td>
+                            <td><?= htmlspecialchars($entry['batch_number']) ?></td>
                             <td><?= htmlspecialchars($entry['brand_name']) ?></td>
                             <td><?= htmlspecialchars($entry['printing_company']) ?></td>
                             <td><?= htmlspecialchars($entry['checked_by']) ?></td>
                             <td><?= htmlspecialchars($entry['status']) ?></td>
                             <td><?= htmlspecialchars(date('d-m-Y', strtotime($entry['entry_date']))) ?></td>
-                            <td><a href="edit_printing_approval.php?id=<?= $entry['id'] ?>" class="btn btn-sm btn-secondary">Edit</a></td>
+                            <td>
+                                <a href="edit_printing_approval.php?id=<?= $entry['id'] ?>" class="btn btn-sm btn-secondary">Edit</a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
