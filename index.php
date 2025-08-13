@@ -77,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: none;
             font-weight: 600;
             transition: background-color 0.3s ease;
+            color:white;
         }
         .btn-login:hover {
             background-color: #5a0ecc;

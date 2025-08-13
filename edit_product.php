@@ -23,19 +23,20 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize and get POST data with null coalescing operator
-    $product_name = $_POST['product_name'] ?? '';
-    $brand_name = $_POST['brand_name'] ?? '';
-    $batch_no = $_POST['batch_no'] ?? '';
-    $budget = $_POST['budget'] ?? '';
-    $fragrance_type = $_POST['fragrance_type'] ?? '';
-    $target_audience = $_POST['target_audience'] ?? '';
-    $design_style = $_POST['design_style'] ?? '';
+    // Sanitize and get POST data
+    $product_name       = $_POST['product_name'] ?? '';
+    $brand_name         = $_POST['brand_name'] ?? '';
+    $batch_no           = $_POST['batch_no'] ?? '';
+    $budget             = $_POST['budget'] ?? '';
+    $fragrance_type     = $_POST['fragrance_type'] ?? '';
+    $target_audience    = $_POST['target_audience'] ?? '';
+    $design_style       = $_POST['design_style'] ?? '';
     $box_packaging_type = $_POST['box_packaging_type'] ?? '';
-    $bottle_coating = $_POST['bottle_coating'] ?? '';
-    $box_finishing = $_POST['box_finishing'] ?? '';
-    $color = $_POST['color'] ?? '';
-    $size = $_POST['size'] ?? '';
+    $bottle_coating     = $_POST['bottle_coating'] ?? '';
+    $box_finishing      = $_POST['box_finishing'] ?? '';
+    $color              = $_POST['color'] ?? '';
+    $size               = $_POST['size'] ?? '';
+    $product_type       = $_POST['product_type'] ?? ''; // NEW FIELD
 
     if (!$product_name || !$brand_name) {
         $error = 'Product Name and Brand Name are required.';
@@ -43,13 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("UPDATE perfume_products SET
             product_name = ?, brand_name = ?, batch_no = ?, budget = ?, fragrance_type = ?,
             target_audience = ?, design_style = ?, box_packaging_type = ?, bottle_coating = ?, box_finishing = ?,
-            color = ?, size = ?
+            color = ?, size = ?, product_type = ?
             WHERE id = ?");
 
         $updated = $stmt->execute([
             $product_name, $brand_name, $batch_no, $budget, $fragrance_type,
             $target_audience, $design_style, $box_packaging_type, $bottle_coating, $box_finishing,
-            $color, $size,
+            $color, $size, $product_type, // include new field
             $id
         ]);
 
@@ -68,9 +69,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require 'includes/header.php';
 ?>
 
-<div class="container">
-    <h2>Perfume Product</h2>
-
+<div class="container my-5">
+      <div class="card shadow-sm mx-auto" style="max-width: 900px;">
+     <div class="card-header bg-primary text-white">
+    <h2>Edit Perfume Product</h2>
+    </div>
+       <div class="card-body">
     <?php if ($success): ?>
         <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
     <?php elseif ($error): ?>
@@ -88,6 +92,21 @@ require 'includes/header.php';
             <label for="brand_name" class="form-label">Brand Name *</label>
             <input type="text" name="brand_name" id="brand_name" class="form-control" required
                    value="<?= htmlspecialchars($product['brand_name']) ?>">
+        </div>
+
+        <!-- NEW DROPDOWN FIELD -->
+        <div class="col-md-6">
+            <label for="product_type" class="form-label">Select Type</label>
+            <select name="product_type" id="product_type" class="form-select">
+                <?php
+                $typeOptions = ['Box', 'Bottle', 'Label', 'Marketing Asset'];
+                echo '<option value="">-- Select Type --</option>';
+                foreach ($typeOptions as $option) {
+                    $sel = ($product['product_type'] === $option) ? 'selected' : '';
+                    echo "<option value=\"" . htmlspecialchars($option) . "\" $sel>" . htmlspecialchars($option) . "</option>";
+                }
+                ?>
+            </select>
         </div>
 
         <div class="col-md-4">
@@ -138,7 +157,6 @@ require 'includes/header.php';
                    value="<?= htmlspecialchars($product['box_finishing']) ?>">
         </div>
 
-        <!-- New fields: color and size -->
         <div class="col-md-6">
             <label for="color" class="form-label">Color</label>
             <input type="text" name="color" id="color" class="form-control"
@@ -151,11 +169,15 @@ require 'includes/header.php';
                    value="<?= htmlspecialchars($product['size']) ?>">
         </div>
 
+
+
         <div class="col-12 mt-3">
             <button type="submit" class="btn btn-primary">Update Product</button>
             <a href="view_products.php" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
+</div>
+</div>
 </div>
 
 <?php require 'includes/footer.php'; ?>

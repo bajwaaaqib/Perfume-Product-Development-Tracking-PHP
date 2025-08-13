@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $box_finishing = $_POST['box_finishing'] ?? '';
     $color = $_POST['color'] ?? '';
     $size = $_POST['size'] ?? '';
+    $product_type = $_POST['product_type'] ?? '';
     $created_by = $_SESSION['user']['id'];
 
     if (!$product_name || !$brand_name) {
@@ -31,18 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("INSERT INTO perfume_products (
             product_name, brand_name, batch_no, budget, fragrance_type,
             target_audience, design_style, box_packaging_type,
-            bottle_coating, box_finishing, color, size, created_by
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            bottle_coating, box_finishing, color, size, product_type, created_by
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         $result = $stmt->execute([
             $product_name, $brand_name, $batch_no, $budget, $fragrance_type,
             $target_audience, $design_style, $box_packaging_type,
-            $bottle_coating, $box_finishing, $color, $size, $created_by
+            $bottle_coating, $box_finishing, $color, $size, $product_type, $created_by
         ]);
 
         if ($result) {
             $success = "Product added successfully!";
-            // Clear POST data after success to clear form fields
             $_POST = [];
         } else {
             $error = "Failed to add product.";
@@ -73,14 +73,14 @@ body {
       <?php endif; ?>
 
       <form method="POST" class="row g-3">
-        <!-- Product Name (Text) -->
+        <!-- Product Name -->
         <div class="col-md-6">
           <label for="product_name" class="form-label">Product Name <span class="text-danger">*</span></label>
           <input type="text" class="form-control" id="product_name" name="product_name" required
                  value="<?= htmlspecialchars($_POST['product_name'] ?? '') ?>">
         </div>
 
-        <!-- Brand Name (Dropdown) -->
+        <!-- Brand Name -->
         <div class="col-md-6">
           <label for="brand_name" class="form-label">Brand Name <span class="text-danger">*</span></label>
           <select class="form-select" id="brand_name" name="brand_name" required>
@@ -96,21 +96,37 @@ body {
           </select>
         </div>
 
-        <!-- Batch No. (Text) -->
+        <!-- Product Type -->
+        <div class="col-md-4">
+          <label for="product_type" class="form-label">Product Type</label>
+          <select class="form-select" id="product_type" name="product_type">
+            <?php
+            $typeOptions = ['Box', 'Bottle', 'Label', 'Marketing Asset'];
+            $selectedType = $_POST['product_type'] ?? '';
+            echo '<option value="">-- Select Type --</option>';
+            foreach ($typeOptions as $option) {
+                $sel = ($option === $selectedType) ? 'selected' : '';
+                echo "<option value=\"" . htmlspecialchars($option) . "\" $sel>" . htmlspecialchars($option) . "</option>";
+            }
+            ?>
+          </select>
+        </div>
+
+        <!-- Batch No -->
         <div class="col-md-4">
           <label for="batch_no" class="form-label">Batch No.</label>
           <input type="text" class="form-control" id="batch_no" name="batch_no"
                  value="<?= htmlspecialchars($_POST['batch_no'] ?? '') ?>">
         </div>
 
-        <!-- Budget (Text) -->
+        <!-- Budget -->
         <div class="col-md-4">
           <label for="budget" class="form-label">Budget</label>
           <input type="text" class="form-control" id="budget" name="budget"
                  value="<?= htmlspecialchars($_POST['budget'] ?? '') ?>">
         </div>
 
-        <!-- Fragrance Type (Dropdown) -->
+        <!-- Fragrance Type -->
         <div class="col-md-4">
           <label for="fragrance_type" class="form-label">Fragrance Type</label>
           <select class="form-select" id="fragrance_type" name="fragrance_type">
@@ -126,7 +142,7 @@ body {
           </select>
         </div>
 
-        <!-- Target Audience (Dropdown) -->
+        <!-- Target Audience -->
         <div class="col-md-4">
           <label for="target_audience" class="form-label">Target Audience</label>
           <select class="form-select" id="target_audience" name="target_audience">
@@ -142,7 +158,7 @@ body {
           </select>
         </div>
 
-        <!-- Design Style (Dropdown) -->
+        <!-- Design Style -->
         <div class="col-md-4">
           <label for="design_style" class="form-label">Design Style Preference</label>
           <select class="form-select" id="design_style" name="design_style">
@@ -158,7 +174,7 @@ body {
           </select>
         </div>
 
-        <!-- Box Packaging Type (Dropdown) -->
+        <!-- Box Packaging Type -->
         <div class="col-md-4">
           <label for="box_packaging_type" class="form-label">Box Packaging Type</label>
           <select class="form-select" id="box_packaging_type" name="box_packaging_type">
@@ -174,7 +190,7 @@ body {
           </select>
         </div>
 
-        <!-- Bottle Coating (Dropdown) -->
+        <!-- Bottle Coating -->
         <div class="col-md-4">
           <label for="bottle_coating" class="form-label">Bottle Coating</label>
           <select class="form-select" id="bottle_coating" name="bottle_coating">
@@ -190,7 +206,7 @@ body {
           </select>
         </div>
 
-        <!-- Box Finishing (Dropdown) -->
+        <!-- Box Finishing -->
         <div class="col-md-4">
           <label for="box_finishing" class="form-label">Box Finishing</label>
           <select class="form-select" id="box_finishing" name="box_finishing">
@@ -206,14 +222,14 @@ body {
           </select>
         </div>
 
-        <!-- Color (Text Input) -->
+        <!-- Color -->
         <div class="col-md-6">
           <label for="color" class="form-label">Color</label>
           <input type="text" class="form-control" id="color" name="color"
                  value="<?= htmlspecialchars($_POST['color'] ?? '') ?>">
         </div>
 
-        <!-- Size (Text Input) -->
+        <!-- Size -->
         <div class="col-md-6">
           <label for="size" class="form-label">Size</label>
           <input type="text" class="form-control" id="size" name="size"
