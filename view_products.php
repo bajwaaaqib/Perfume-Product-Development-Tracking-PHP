@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'], $_POST[
     exit;
 }
 
-$statuses = ['Tasks To Do', 'Pending', 'In Progress', 'Approved Internally', 'Printing Approval', 'Completion', 'Postpond'];
+$statuses = ['Tasks To Do', 'Pending', 'In Progress', 'Approved Internally', 'Printing Approval', 'Completion', 'Postpond', 'Done'];
 
 $stmt = $pdo->query("
     SELECT p.*, u.email AS created_by_email

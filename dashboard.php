@@ -60,6 +60,50 @@ h2.mb-4.text-center {
     background-color: rgba(102, 16, 242, 0.1);
     border: 2px dashed #6610f2;
 }
+/* Modal styles */
+.modal-content {
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+.modal-header {
+    background: linear-gradient(135deg, #6f42c1, #6610f2);
+    color: white;
+    border-radius: 0.5rem 0.5rem 0 0;
+    padding: 1rem 1.5rem;
+}
+.modal-title {
+    font-weight: 600;
+}
+.modal-body {
+    padding: 1.5rem;
+}
+.product-detail {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+.product-detail-label {
+    font-weight: 600;
+    color: #6f42c1;
+    width: 200px;
+    flex-shrink: 0;
+}
+.product-detail-value {
+    flex-grow: 1;
+}
+.product-name {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.product-name:hover {
+    color: #6610f2;
+    text-decoration: underline;
+}
+.empty-value {
+    color: #6c757d;
+    font-style: italic;
+}
 </style>
 
 <div class="container py-4">
@@ -80,7 +124,9 @@ h2.mb-4.text-center {
                             data-status="<?= $task['status'] ?>">
                             <div class="flex-grow-1 overflow-hidden">
                                 <strong class="d-flex align-items-center text-nowrap overflow-hidden text-truncate" style="max-width: 100%;">
-                                    <?= htmlspecialchars($task['product_name']) ?>
+                                    <span class="product-name" onclick="showProductDetails(<?= htmlspecialchars(json_encode($task)) ?>)">
+                                        <?= htmlspecialchars($task['product_name']) ?>
+                                    </span>
                                     <span class="text-primary ms-2 small flex-shrink-0">
                                         <?= round($status_percentage[$task['status']]) ?>%
                                     </span>
@@ -96,7 +142,74 @@ h2.mb-4.text-center {
     </div>
 </div>
 
+<!-- Product Details Modal -->
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productDetailsModalLabel">Product Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="productDetailsContent">
+                <!-- Content will be inserted here by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+// Initialize Bootstrap modal
+var productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal'));
+
+function formatFieldName(field) {
+    return field.replace(/_/g, ' ')
+               .replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+}
+
+function showProductDetails(product) {
+    const modalContent = document.getElementById('productDetailsContent');
+    document.getElementById('productDetailsModalLabel').textContent = product.product_name + ' Details';
+    
+    // Define the fields we want to show in order
+    const fieldsToShow = [
+        'product_name',
+        'brand_name',
+        'batch_no',
+        'budget',
+        'fragrance_type',
+        'target_audience',
+        'design_style',
+        'box_packaging_type',
+        'bottle_coating',
+        'box_finishing',
+        'created_at',
+        'status',
+        'color',
+        'size',
+        'product_type'
+    ];
+    
+    let html = '';
+    
+    fieldsToShow.forEach(field => {
+        const value = product[field] ? product[field] : '<span class="empty-value">Not specified</span>';
+        const formattedField = formatFieldName(field);
+        
+        html += `
+            <div class="product-detail">
+                <span class="product-detail-label">${formattedField}:</span>
+                <span class="product-detail-value">${value}</span>
+            </div>
+        `;
+    });
+    
+    modalContent.innerHTML = html;
+    productDetailsModal.show();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const draggables = document.querySelectorAll('.list-group-item');
     const columns = document.querySelectorAll('.task-column');

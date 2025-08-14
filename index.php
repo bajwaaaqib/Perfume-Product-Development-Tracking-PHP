@@ -15,6 +15,11 @@ if (isset($_SESSION['user'])) {
     exit;
 }
 
+// Pre-fill email from cookie if exists
+if (isset($_COOKIE['user_email']) && !isset($_POST['email'])) {
+    $_POST['email'] = $_COOKIE['user_email'];
+}
+
 $error = '';
 
 // Handle login submission
@@ -25,6 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user && password_verify($_POST['password'], $user['password'])) {
         $_SESSION['user'] = $user;
+
+        // If "Keep me logged in" checked, store cookie for 30 days
+        if (!empty($_POST['remember'])) {
+            setcookie("user_email", $user['email'], time() + (86400 * 30), "/"); // 86400 = 1 day
+        } else {
+            // Remove cookie if unchecked
+            setcookie("user_email", "", time() - 3600, "/");
+        }
+
         header('Location: dashboard.php');
         exit;
     } else {
@@ -106,10 +120,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required
                 value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
         </div>
-        <div class="mb-4 text-start">
+        <div class="mb-3 text-start">
             <label for="password" class="form-label fw-semibold">Password</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
         </div>
+
+        <!-- Remember Me Checkbox -->
+        <div class="mb-4 text-start form-check">
+            <input type="checkbox" class="form-check-input" id="remember" name="remember" 
+                <?= !empty($_COOKIE['user_email']) ? 'checked' : '' ?>>
+            <label class="form-check-label" for="remember">Remember me</label>
+        </div>
+
         <button type="submit" class="btn btn-login w-100 py-2">Login</button>
     </form>
 </div>

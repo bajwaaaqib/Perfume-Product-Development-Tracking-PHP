@@ -142,7 +142,7 @@
           <li class="nav-item"><a class="nav-link" href="weekly_reports.php"><i class="bi bi-file-earmark-text me-1"></i>Report</a></li>
           <li class="nav-item"><a class="nav-link" href="products.php"><i class="bi bi-box-seam me-1"></i>Products</a></li>
           <li class="nav-item"><a class="nav-link" href="state.php"><i class="bi bi-bar-chart-line me-1"></i>States</a></li>
-          <li class="nav-item"><a class="nav-link" href="create_user.php"><i class="bi bi-person-plus me-1"></i>Add User</a></li>
+          <li class="nav-item"><a class="nav-link" href="create_user.php"><i class="bi bi-person-plus me-1"></i>Users</a></li>
           <li class="nav-item"><a class="nav-link logout-link" href="logout.php"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
         <?php else: ?>
           <li class="nav-item"><a class="nav-link" href="index.php">Login</a></li>
