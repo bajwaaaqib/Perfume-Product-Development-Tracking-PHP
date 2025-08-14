@@ -6,10 +6,8 @@ require 'includes/auth.php';
 require 'includes/db.php'; // $pdo
 require_once 'includes/fpdf.php'; // ensure only loaded once
 
-// Get search keyword from URL
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
-// Build SQL query to search across multiple columns (name, brand, category, type)
 $sql = "SELECT * FROM products WHERE 1=1 ";
 $params = [];
 
@@ -30,7 +28,6 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Generate PDF if requested
 if (isset($_GET['download_pdf'])) {
     $pdf = new FPDF();
     $pdf->AddPage();
@@ -42,7 +39,6 @@ if (isset($_GET['download_pdf'])) {
         $pdf->Cell(0, 10, 'Search: ' . $search, 0, 1);
     }
 
-    // Table header
     $pdf->SetFont('Arial', 'B', 12);
     $pdf->Cell(10, 10, '#', 1);
     $pdf->Cell(50, 10, 'Name', 1);
@@ -52,7 +48,6 @@ if (isset($_GET['download_pdf'])) {
     $pdf->Cell(20, 10, 'Status', 1);
     $pdf->Ln();
 
-    // Table data
     $pdf->SetFont('Arial', '', 12);
     $serial = 1;
     foreach ($products as $p) {
@@ -65,56 +60,71 @@ if (isset($_GET['download_pdf'])) {
         $pdf->Ln();
     }
 
-    $pdf->Output('D', 'products.pdf'); // download
-    exit; // prevent further output
+    $pdf->Output('D', 'products.pdf');
+    exit;
 }
 
 require 'includes/header.php';
 ?>
 
+<style>
+/* Mobile adjustments: search in first row, buttons in second row */
+@media (max-width: 576px) {
+    .search-input-row {
+        flex: 1 1 100%;
+    }
+    .button-row {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    .button-row .btn {
+        flex: 1 1 48%; /* Two buttons per line, adjust as needed */
+        min-width: 120px;
+    }
+}
+</style>
+
 <div class="container my-5">
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h1 class="h3 mb-0">
-                <?php
-                if ($search !== '') {
-                    echo 'Search results for: <em>' . htmlspecialchars($search) . '</em>';
-                } else {
-                    echo 'All Products';
-                }
-                ?>
+                <?= $search !== '' ? 'Search results for: <em>' . htmlspecialchars($search) . '</em>' : 'All Products' ?>
             </h1>
         </div>
 
         <div class="card-body">
-            <form method="GET" class="d-flex align-items-center gap-2 flex-nowrap mb-4" style="overflow-x:auto;">
-                <input 
-                    type="text" 
-                    name="search" 
-                    value="<?= htmlspecialchars($search) ?>" 
-                    class="form-control form-control-sm flex-grow-1 min-w-0" 
-                    placeholder="Search products by any keyword..." 
-                    aria-label="Search products"
-                    style="min-width:150px;"
-                >
+            <!-- Search and Buttons -->
+            <form method="GET" class="d-flex flex-column flex-sm-row gap-2 mb-4">
+                <div class="search-input-row d-flex">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        value="<?= htmlspecialchars($search) ?>" 
+                        class="form-control form-control-sm w-100" 
+                        placeholder="Search by any keyword"
+                    >
+                </div>
 
-                <button type="submit" class="btn btn-secondary btn-sm px-3 flex-shrink-0">
-                    <i class="bi bi-search"></i> Search
-                </button>
+                <div class="button-row d-flex gap-2 flex-wrap mt-2 mt-sm-0">
+                    <button type="submit" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-search"></i> Search
+                    </button>
 
-                <?php if ($search !== ''): ?>
-                    <a href="?" class="btn btn-outline-secondary btn-sm px-3 flex-shrink-0">
-                        <i class="bi bi-x-circle"></i> Clear
+                    <?php if ($search !== ''): ?>
+                        <a href="?" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-x-circle"></i> Clear
+                        </a>
+                    <?php endif; ?>
+
+                    <a href="add_products_brand.php" class="btn btn-secondary btn-sm ms-auto">
+                        <i class="bi bi-plus-lg"></i> Add New
                     </a>
-                <?php endif; ?>
 
-                <a href="add_products_brand.php" class="btn btn-secondary btn-sm px-3 flex-shrink-0 ms-auto">
-                    <i class="bi bi-plus-lg"></i> Add New
-                </a>
-
-                <button type="submit" name="download_pdf" value="1" class="btn btn-danger btn-sm flex-shrink-0 ms-2">
-                    <i class="bi bi-file-earmark-pdf"></i> Download PDF
-                </button>
+                    <button type="submit" name="download_pdf" value="1" class="btn btn-danger btn-sm">
+                        <i class="bi bi-file-earmark-pdf"></i> Download PDF
+                    </button>
+                </div>
             </form>
 
             <?php if (count($products) === 0): ?>
