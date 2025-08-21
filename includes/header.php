@@ -21,31 +21,42 @@
     .navbar {
       background: linear-gradient(90deg, #6f42c1, #6610f2);
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      min-height: 60px;
+      position: relative;
     }
+    
+    /* Brand styling */
     .navbar-brand {
       font-weight: bold;
       font-size: 1.6rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
       color: #fff;
       transition: all 0.3s ease;
-      white-space: nowrap;
+      margin: 0 auto;
+      display: block;
+      text-align: center;
+      width: 100%;
+      padding: 0.5rem 0;
     }
     .navbar-brand:hover {
       color: #ffd700;
+      cursor: pointer;
     }
-    .navbar-brand img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-      transition: transform 0.4s ease;
+    
+    /* Desktop menu container - hidden initially */
+    #desktopMenu {
+      display: none;
+      width: 100%;
     }
-    .navbar-brand img:hover {
-      transform: scale(1.2) rotate(10deg);
+    
+    /* When menu is expanded */
+    .navbar-expanded .navbar-brand {
+      display: none;
     }
-
+    .navbar-expanded #desktopMenu {
+      display: flex;
+    }
+    
+    /* Menu items styling */
     .nav-link {
       color: #ffffff;
       font-weight: 500;
@@ -54,6 +65,7 @@
       position: relative;
       transition: all 0.3s ease;
       white-space: nowrap;
+      padding: 0.5rem 1rem;
     }
     .nav-link:hover {
       color: #ffd700;
@@ -73,12 +85,7 @@
       width: 100%;
     }
 
-    .nav-item .active-link {
-      color: #ffd700 !important;
-      font-weight: bold;
-    }
-
-    /* Logout highlight */
+    /* Logout button styling */
     .nav-link.logout-link {
       background: #ff4b5c;
       color: #fff !important;
@@ -88,52 +95,90 @@
     }
     .nav-link.logout-link:hover {
       background: #ff1f3a;
-      color: #fff !important;
     }
-
-    /* Drop animation 
-    .drop {
-      position: fixed;
-      top: -10px;
-      width: 8px;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
-      animation: fall linear infinite;
-      z-index: 0;
-      pointer-events: none;
+    
+    /* Mobile menu toggle button */
+    .navbar-toggler {
+      border: none;
+      position: absolute;
+      right: 1rem;
+      top: 0.5rem;
     }
-    @keyframes fall {
-      0% { transform: translateY(0); opacity: 0.7; }
-      100% { transform: translateY(110vh); opacity: 0; }
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
     }
-
-    /* Responsive tweaks */
-    @media (max-width: 768px) {
-      .navbar-brand { font-size: 1.4rem; }
-      .nav-link { font-size: 0.95rem; }
+    
+    /* Mobile menu styling */
+    @media (max-width: 991.98px) {
+      .navbar-brand {
+        text-align: left;
+        padding-left: 1rem;
+        width: auto;
+      }
+      
+      /* Hide desktop menu on mobile */
+      #desktopMenu {
+        display: none !important;
+      }
+      
+      /* Show mobile menu when toggler is clicked */
+      #mobileMenu.collapse:not(.show) {
+        display: none;
+      }
+      #mobileMenu.collapse.show {
+        display: block;
+      }
     }
-
-    @media (max-width: 576px) {
-      .navbar-brand img { width: 35px; height: 35px; }
-      .nav-link { font-size: 0.9rem; }
+    
+    /* Desktop menu styling */
+    @media (min-width: 992px) {
+      .navbar-toggler {
+        display: none;
+      }
+      #mobileMenu {
+        display: none !important;
+      }
     }
   </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg sticky-top mb-4">
-  <div class="container">
-    <a class="navbar-brand" href="dashboard.php">
+<nav class="navbar navbar-expand-lg sticky-top mb-4" id="mainNavbar">
+  <div class="container-fluid">
+    <!-- Brand/logo - shown by default -->
+    <span class="navbar-brand" id="navBrand">
       ARD PERFUMES
-    </a>
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    </span>
+    
+    <!-- Mobile menu toggle button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" 
+      aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav align-items-left text-nowrap">
+    
+    <!-- Desktop menu content (hidden initially) -->
+    <div id="desktopMenu">
+      <ul class="navbar-nav mx-auto">
+        <?php if (isset($_SESSION['user'])): ?>
+          <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="add_product.php"><i class="bi bi-plus-square me-1"></i>Add Task</a></li>
+          <li class="nav-item"><a class="nav-link" href="add_product_quality_check.php"><i class="bi bi-check2-square me-1"></i>Quality Check</a></li>
+          <li class="nav-item"><a class="nav-link" href="add_printing_approval.php"><i class="bi bi-printer me-1"></i>Printing Approval</a></li>
+          <li class="nav-item"><a class="nav-link" href="weekly_reports.php"><i class="bi bi-file-earmark-text me-1"></i>Report</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.php"><i class="bi bi-box-seam me-1"></i>Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="state.php"><i class="bi bi-bar-chart-line me-1"></i>States</a></li>
+          <li class="nav-item"><a class="nav-link" href="create_user.php"><i class="bi bi-person-plus me-1"></i>Users</a></li>
+          <li class="nav-item"><a class="nav-link logout-link" href="logout.php"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
+        <?php else: ?>
+          <li class="nav-item"><a class="nav-link" href="index.php">Login</a></li>
+        <?php endif; ?>
+      </ul>
+    </div>
+    
+    <!-- Mobile menu content (uses Bootstrap collapse) -->
+    <div class="collapse navbar-collapse" id="mobileMenu">
+      <ul class="navbar-nav">
         <?php if (isset($_SESSION['user'])): ?>
           <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
           <li class="nav-item"><a class="nav-link" href="add_product.php"><i class="bi bi-plus-square me-1"></i>Add Task</a></li>
@@ -152,20 +197,46 @@
   </div>
 </nav>
 
-<!-- Drop Animation Script -->
-<script>
-  const dropCount = 50;
-  for (let i = 0; i < dropCount; i++) {
-    const drop = document.createElement('div');
-    drop.classList.add('drop');
-    drop.style.left = Math.random() * 100 + 'vw';
-    drop.style.animationDuration = (Math.random() * 3 + 2) + 's';
-    drop.style.animationDelay = Math.random() * 5 + 's';
-    document.body.appendChild(drop);
-  }
-</script>
-
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.getElementById('mainNavbar');
+    const brand = document.getElementById('navBrand');
+    const desktopMenu = document.getElementById('desktopMenu');
+    
+    // Only add click behavior for desktop screens
+    function checkScreenSize() {
+      if (window.innerWidth >= 992) {
+        // Desktop behavior
+        brand.style.cursor = 'pointer';
+        brand.addEventListener('click', toggleDesktopMenu);
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!navbar.contains(e.target) && !desktopMenu.contains(e.target)) {
+            closeDesktopMenu();
+          }
+        });
+      } else {
+        // Mobile behavior - remove desktop click handler
+        brand.removeEventListener('click', toggleDesktopMenu);
+      }
+    }
+    
+    function toggleDesktopMenu() {
+      navbar.classList.toggle('navbar-expanded');
+    }
+    
+    function closeDesktopMenu() {
+      navbar.classList.remove('navbar-expanded');
+    }
+    
+    // Initialize and add resize listener
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+  });
+</script>
 </body>
 </html>

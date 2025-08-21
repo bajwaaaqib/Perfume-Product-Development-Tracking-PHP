@@ -68,70 +68,152 @@ require 'includes/header.php';
 ?>
 
 <style>
-/* Mobile adjustments: search in first row, buttons in second row */
+:root {
+    --primary-color: #6f42c1;
+    --primary-light: #8a63d2;
+    --secondary-color: #6610f2;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --light-gray: #f8f9fa;
+    --dark-gray: #343a40;
+}
+
+body {
+    background-color: var(--light-gray);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card-products {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-products-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.card-products-body {
+    padding: 1.5rem;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    border: 1px solid #e0e0e0;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(111,66,193,0.15);
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d, #5a6268);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #5a6268, #6c757d);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.status-ok { background-color: rgba(40,167,69,0.15); color: var(--success-color); }
+.status-quit { background-color: rgba(220,53,69,0.15); color: var(--danger-color); }
+
+/* Search/buttons row */
+form.d-flex {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+form.d-flex input {
+    min-width: 200px;
+    flex-grow: 1;
+}
+
 @media (max-width: 576px) {
-    .search-input-row {
-        flex: 1 1 100%;
+    form.d-flex {
+        flex-direction: column;
+        align-items: stretch;
     }
-    .button-row {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
+    form.d-flex .btn,
+    form.d-flex a {
+        width: 100%;
     }
-    .button-row .btn {
-        flex: 1 1 48%; /* Two buttons per line, adjust as needed */
-        min-width: 120px;
-    }
+}
+
+/* Table responsive without wrapping */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table-responsive table {
+    white-space: nowrap;
+}
+
+.table-responsive th,
+.table-responsive td {
+    white-space: nowrap;
 }
 </style>
 
 <div class="container my-5">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-            <h1 class="h3 mb-0">
-                <?= $search !== '' ? 'Search results for: <em>' . htmlspecialchars($search) . '</em>' : 'All Products' ?>
-            </h1>
+    <div class="card card-products">
+        <div class="card-products-header">
+            <i class="fas fa-box-open"></i>
+            <?= $search !== '' ? 'Search results for: ' . htmlspecialchars($search) : 'All Products' ?>
         </div>
-
-        <div class="card-body">
-            <!-- Search and Buttons -->
-            <form method="GET" class="d-flex flex-column flex-sm-row gap-2 mb-4">
-                <div class="search-input-row d-flex">
-                    <input 
-                        type="text" 
-                        name="search" 
-                        value="<?= htmlspecialchars($search) ?>" 
-                        class="form-control form-control-sm w-100" 
-                        placeholder="Search by any keyword"
-                    >
-                </div>
-
-                <div class="button-row d-flex gap-2 flex-wrap mt-2 mt-sm-0">
-                    <button type="submit" class="btn btn-secondary btn-sm">
-                        <i class="bi bi-search"></i> Search
-                    </button>
-
-                    <?php if ($search !== ''): ?>
-                        <a href="?" class="btn btn-outline-secondary btn-sm">
-                            <i class="bi bi-x-circle"></i> Clear
-                        </a>
-                    <?php endif; ?>
-
-                    <a href="add_products_brand.php" class="btn btn-secondary btn-sm ms-auto">
-                        <i class="bi bi-plus-lg"></i> Add New
-                    </a>
-
-                    <button type="submit" name="download_pdf" value="1" class="btn btn-danger btn-sm">
-                        <i class="bi bi-file-earmark-pdf"></i> Download PDF
-                    </button>
-                </div>
+        <div class="card-products-body">
+            <!-- Search + Buttons -->
+            <form method="GET" class="d-flex gap-2 mb-3">
+                <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" class="form-control" placeholder="Search by any keyword">
+                <button type="submit" class="btn btn-secondary"><i class="bi bi-search"></i> Search</button>
+                <?php if ($search !== ''): ?>
+                    <a href="?" class="btn btn-outline-secondary"><i class="bi bi-x-circle"></i> Clear</a>
+                <?php endif; ?>
+                <a href="add_products_brand.php" class="btn btn-secondary"><i class="bi bi-plus-lg"></i> Add New</a>
+                <button type="submit" name="download_pdf" value="1" class="btn btn-danger"><i class="bi bi-file-earmark-pdf"></i> PDF</button>
             </form>
 
             <?php if (count($products) === 0): ?>
-                <p class="text-center fs-5 text-muted">No products found.</p>
+                <p class="text-center text-muted">No products found.</p>
             <?php else: ?>
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle text-nowrap">
+                    <table class="table table-hover align-middle">
                         <thead class="table-light">
                             <tr>
                                 <th>#</th>
@@ -139,24 +221,24 @@ require 'includes/header.php';
                                 <th>Brand</th>
                                 <th>Category</th>
                                 <th>Type</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Action</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $serial = 1; ?>
-                            <?php foreach ($products as $product): ?>
+                            <?php $serial = 1; foreach($products as $product): 
+                                $statusClass = $product['status'] ? 'status-ok' : 'status-quit';
+                                $statusText = $product['status'] ? 'OK' : 'Quit';
+                            ?>
                                 <tr>
-                                    <th><?= $serial++ ?></th>
+                                    <td><?= $serial++ ?></td>
                                     <td><?= htmlspecialchars($product['name']) ?></td>
                                     <td><?= htmlspecialchars($product['brand']) ?></td>
                                     <td><?= htmlspecialchars($product['category']) ?></td>
                                     <td><?= htmlspecialchars($product['type']) ?></td>
-                                    <td class="text-center">
-                                        <?= $product['status'] ? '<span class="text-success fs-4">&#10003;</span>' : '<span class="text-danger fs-4">&#10007;</span>' ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="edit_products_brand.php?id=<?= $product['id'] ?>" class="btn btn-sm btn-secondary">Edit</a>
+                                    <td><span class="status-badge <?= $statusClass ?>"><?= $statusText ?></span></td>
+                                    <td>
+                                        <a href="edit_products_brand.php?id=<?= $product['id'] ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Edit</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

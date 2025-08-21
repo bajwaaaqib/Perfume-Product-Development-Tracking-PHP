@@ -27,17 +27,19 @@ $nextDate = $nextStmt->fetchColumn();
 require 'includes/header.php';
 ?>
 
+<div class="container my-5" style="max-width: 900px;">
 
-<div class="container my-5" style="max-width: 850px;">
     <!-- Page Header -->
     <div class="mb-4 text-center text-md-start">
-        <h2 class="fw-bold text-primary">Weekly Reports</h2>
+        <h2 class="fw-bold text-primary"><i class="fas fa-calendar-week me-2"></i>Weekly Reports by Aaqib</h2>
     </div>
 
-    <!-- Add New & Navigation Buttons grouped -->
+    <!-- Add New & Navigation Buttons -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
-        <a href="add_edit_report.php" class="btn btn-secondary flex-grow-1 flex-md-grow-0">+ Add New Report</a>
-        <div class="btn-group flex-grow-1 flex-md-grow-0" role="group" aria-label="Navigation Buttons">
+        <a href="add_edit_report.php" class="btn btn-gradient-primary flex-grow-1 flex-md-grow-0">
+            <i class="fas fa-plus-circle me-2"></i> Add New Report
+        </a>
+        <div class="btn-group flex-grow-1 flex-md-grow-0" role="group">
             <?php if ($prevDate): ?>
                 <a href="weekly_reports.php?date=<?= htmlspecialchars($prevDate) ?>" class="btn btn-outline-primary px-4">&laquo; Previous</a>
             <?php else: ?>
@@ -53,25 +55,26 @@ require 'includes/header.php';
     </div>
 
     <!-- Date Selection Card -->
-    <div class="card shadow-sm mb-5">
+    <div class="card shadow-sm mb-5 rounded-4">
         <div class="card-body">
             <form id="date-select-form" class="row g-3 align-items-center">
                 <div class="col-12 col-md-6">
                     <label for="report-date-select" class="form-label fw-semibold">Jump to report date</label>
-                    <select id="report-date-select" class="form-select" aria-label="Select report date">
+                    <select id="report-date-select" class="form-select">
                         <?php foreach ($reportDates as $d): ?>
                             <option value="weekly_reports.php?date=<?= htmlspecialchars($d) ?>" <?= $d === $selectedDate ? 'selected' : '' ?>>
                                 <?= date('d M Y', strtotime($d)) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <div  class="form-text">Short Cut</div>
+                    <div class="form-text">Shortcut selection</div>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label for="datepicker" class="form-label fw-semibold">Or select a date</label>
-                    <input type="text" id="datepicker" class="form-control" style="cursor: pointer;" value="<?= htmlspecialchars($selectedDate) ?>" aria-describedby="datepickerHelp" autocomplete="off" />
-                    <div id="datepickerHelp" class="form-text">Click to select date from calendar</div>
+                    <input type="text" id="datepicker" class="form-control" style="cursor: pointer;" 
+                           value="<?= htmlspecialchars($selectedDate) ?>" autocomplete="off" />
+                    <div class="form-text">Click to select date from calendar</div>
                 </div>
             </form>
         </div>
@@ -79,21 +82,27 @@ require 'includes/header.php';
 
     <!-- Reports Display -->
     <div class="mb-5">
-        <h4 class="mb-4 text-secondary fw-semibold border-bottom pb-2">Reports for <?= date('d M Y', strtotime($selectedDate)) ?></h4>
+        <h4 class="mb-4 text-secondary fw-semibold border-bottom pb-2">
+            Reports for <?= date('d M Y', strtotime($selectedDate)) ?>
+        </h4>
 
         <?php if (count($reports) === 0): ?>
             <p class="text-center text-muted fst-italic">No reports found for this date.</p>
         <?php else: ?>
             <div class="list-group">
                 <?php foreach ($reports as $r): ?>
-                    <div class="list-group-item list-group-item-action flex-column align-items-start shadow-sm mb-3 rounded">
+                    <div class="list-group-item flex-column align-items-start shadow-sm mb-3 rounded-4 p-3">
                         <pre class="mb-3" style="white-space: pre-wrap; font-family: inherit; font-size: 1rem;"><?= htmlspecialchars($r['content']) ?></pre>
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="add_edit_report.php?id=<?= htmlspecialchars($r['id']) ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                <form method="POST" action="delete_report.php" >
-                                      <input type="hidden" name="id" value="<?= htmlspecialchars($r['id']) ?>">
-                                      <button type="submit" class="btn btn-sm btn-outline-danger">Del</button>
-                                 </form>
+                            <a href="add_edit_report.php?id=<?= htmlspecialchars($r['id']) ?>" class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-edit me-1"></i> Edit
+                            </a>
+                            <form method="POST" action="delete_report.php" class="d-inline">
+                                <input type="hidden" name="id" value="<?= htmlspecialchars($r['id']) ?>">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash-alt me-1"></i> Del
+                                </button>
+                            </form>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -101,18 +110,43 @@ require 'includes/header.php';
         <?php endif; ?>
     </div>
 </div>
-<!-- Load jQuery (required for Bootstrap Datepicker) -->
+
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Bootstrap Datepicker CSS & JS -->
+<!-- Bootstrap Datepicker -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<style>
+/* Gradient Button */
+.btn-gradient-primary {
+    background: linear-gradient(135deg, #6f42c1, #6610f2);
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    transition: all 0.3s;
+}
+.btn-gradient-primary:hover {
+    background: linear-gradient(135deg, #8a63d2, #6f42c1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Highlight dates in datepicker */
+.datepicker table tr td.bg-info {
+    background-color: #0dcaf0 !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+}
+</style>
 
 <script>
 const reportDates = <?= json_encode($reportDates) ?>;
 
 $(document).ready(function() {
-    // Jump to selected date from dropdown
+    // Jump to selected date
     $('#report-date-select').on('change', function() {
         window.location.href = this.value;
     });
@@ -124,30 +158,26 @@ $(document).ready(function() {
         autoclose: true,
         beforeShowDay: function(date) {
             const d = date.getFullYear() + '-' +
-          String(date.getMonth() + 1).padStart(2, '0') + '-' +
-          String(date.getDate()).padStart(2, '0');
-
+                      String(date.getMonth() + 1).padStart(2, '0') + '-' +
+                      String(date.getDate()).padStart(2, '0');
             if (reportDates.includes(d)) {
-                return {
-                    classes: 'bg-info text-white rounded-circle',
-                    tooltip: 'Report available'
-                };
+                return { classes: 'bg-info text-white rounded-circle', tooltip: 'Report available' };
             }
             return;
         }
     });
 
-    // Show datepicker on input click
+    // Show datepicker on click
     $('#datepicker').on('click', function() {
         $(this).datepicker('show');
     });
 
-    // Prevent manual typing in date input
+    // Prevent manual typing
     $('#datepicker').on('keydown paste', function(e) {
         e.preventDefault();
     });
 
-    // On date select, redirect to that date's report
+    // On date select, redirect
     $('#datepicker').on('changeDate', function(e) {
         const date = e.format('yyyy-mm-dd');
         window.location.href = 'weekly_reports.php?date=' + date;

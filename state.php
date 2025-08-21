@@ -78,7 +78,7 @@ body {
             <a href="?filter=perfume_completed" class="text-decoration-none">
                 <div class="card text-center bg-success text-white">
                     <div class="card-body">
-                        <h5>Completed Products</h5>
+                        <h5>Completed</h5>
                         <h2><?= $res_completed ?></h2>
                     </div>
                 </div>
@@ -88,7 +88,7 @@ body {
             <a href="?filter=perfume_inprogress" class="text-decoration-none">
                 <div class="card text-center bg-warning text-dark">
                     <div class="card-body">
-                        <h5>In Progress Products</h5>
+                        <h5>In Progress</h5>
                         <h2><?= $res_inprogress ?></h2>
                     </div>
                 </div>
@@ -108,7 +108,7 @@ body {
             <a href="?filter=products_discontinued" class="text-decoration-none">
                 <div class="card text-center bg-danger text-white">
                     <div class="card-body">
-                        <h5>Products Discontinued</h5>
+                        <h5>Inactive Products</h5>
                         <h2><?= $res_discontinued ?></h2>
                     </div>
                 </div>
@@ -194,7 +194,7 @@ const ctx = document.getElementById('statusChart').getContext('2d');
 new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Completed Products', 'In Progress Products', 'Active Products', 'Products Discontinued'],
+        labels: ['Completed', 'In Progress', 'Active Products', 'Inactive Products'],
         datasets: [{
             label: 'Number of Products',
             data: [<?= $res_completed ?>, <?= $res_inprogress ?>, <?= $res_continued ?>, <?= $res_discontinued ?>],

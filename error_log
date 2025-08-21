@@ -254,3 +254,84 @@ Stack trace:
 [13-Aug-2025 04:38:56 America/Boise] PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /home1/marcoluc/public_html/ardperfumes/npd/includes/auth.php on line 2) in /home1/marcoluc/public_html/ardperfumes/npd/includes/auth.php on line 2
 [13-Aug-2025 04:39:01 America/Boise] PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /home1/marcoluc/public_html/ardperfumes/npd/includes/auth.php on line 2) in /home1/marcoluc/public_html/ardperfumes/npd/includes/header.php on line 2
 [13-Aug-2025 04:39:01 America/Boise] PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /home1/marcoluc/public_html/ardperfumes/npd/includes/auth.php on line 2) in /home1/marcoluc/public_html/ardperfumes/npd/includes/auth.php on line 2
+[16-Aug-2025 03:46:36 America/Boise] PHP Warning:  Undefined array key "Postpond" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 281
+[16-Aug-2025 03:46:36 America/Boise] PHP Warning:  Undefined array key "Postpond" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 281
+[16-Aug-2025 03:47:56 America/Boise] PHP Warning:  Undefined array key "Postpond" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 302
+[16-Aug-2025 03:47:56 America/Boise] PHP Warning:  Undefined array key "Postpond" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 302
+[16-Aug-2025 03:49:19 America/Boise] PHP Warning:  Undefined array key "Postpond" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 302
+[16-Aug-2025 03:49:19 America/Boise] PHP Warning:  Undefined array key "Postpond" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 302
+[16-Aug-2025 03:50:02 America/Boise] PHP Warning:  Undefined array key "Postpond" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 298
+[16-Aug-2025 03:50:02 America/Boise] PHP Warning:  Undefined array key "Postpond" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 298
+[16-Aug-2025 06:33:47 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 16
+[16-Aug-2025 06:33:50 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 16
+[16-Aug-2025 06:33:52 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 16
+[16-Aug-2025 06:35:05 America/Boise] PHP Warning:  Undefined array key "role" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 7
+[16-Aug-2025 06:35:05 America/Boise] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home1/marcoluc/public_html/ardperfumes/npd/includes/header.php:3) in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 8
+[16-Aug-2025 06:35:08 America/Boise] PHP Warning:  Undefined array key "role" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 7
+[16-Aug-2025 06:35:08 America/Boise] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home1/marcoluc/public_html/ardperfumes/npd/includes/header.php:3) in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 8
+[16-Aug-2025 06:35:29 America/Boise] PHP Warning:  Undefined array key "role" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 11
+[16-Aug-2025 06:35:29 America/Boise] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home1/marcoluc/public_html/ardperfumes/npd/includes/header.php:3) in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 12
+[16-Aug-2025 06:39:24 America/Boise] PHP Warning:  Undefined array key "user_id" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 289
+[16-Aug-2025 06:39:24 America/Boise] PHP Warning:  Undefined array key "user_id" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 289
+[16-Aug-2025 06:39:52 America/Boise] PHP Warning:  Undefined array key "role" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 11
+[16-Aug-2025 06:39:52 America/Boise] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home1/marcoluc/public_html/ardperfumes/npd/includes/header.php:3) in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 12
+[16-Aug-2025 06:41:44 America/Boise] PHP Warning:  Undefined array key "plain_password" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 223
+[16-Aug-2025 06:41:44 America/Boise] PHP Warning:  Undefined array key "plain_password" in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 223
+[17-Aug-2025 22:25:22 America/Boise] PHP Fatal error:  Uncaught PDOException: SQLSTATE[21S01]: Insert value list does not match column list: 1136 Column count doesn't match value count at row 1 in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php:29
+Stack trace:
+#0 /home1/marcoluc/public_html/ardperfumes/npd/create_user.php(29): PDOStatement->execute(Array)
+#1 {main}
+  thrown in /home1/marcoluc/public_html/ardperfumes/npd/create_user.php on line 29
+[17-Aug-2025 22:47:01 America/Boise] PHP Warning:  Undefined array key "user_id" in /home1/marcoluc/public_html/ardperfumes/npd/weekly_reports.php on line 7
+[17-Aug-2025 22:47:04 America/Boise] PHP Warning:  Undefined array key "user_id" in /home1/marcoluc/public_html/ardperfumes/npd/weekly_reports.php on line 7
+[17-Aug-2025 22:47:06 America/Boise] PHP Warning:  Undefined array key "user_id" in /home1/marcoluc/public_html/ardperfumes/npd/weekly_reports.php on line 7
+[17-Aug-2025 22:47:39 America/Boise] PHP Warning:  Undefined array key "user_id" in /home1/marcoluc/public_html/ardperfumes/npd/weekly_reports.php on line 7
+[17-Aug-2025 22:47:45 America/Boise] PHP Warning:  Undefined array key "user_id" in /home1/marcoluc/public_html/ardperfumes/npd/weekly_reports.php on line 7
+[17-Aug-2025 22:48:48 America/Boise] PHP Warning:  Undefined array key "user_id" in /home1/marcoluc/public_html/ardperfumes/npd/weekly_reports.php on line 4
+[17-Aug-2025 22:48:48 America/Boise] PHP Warning:  Undefined array key "user_id" in /home1/marcoluc/public_html/ardperfumes/npd/weekly_reports.php on line 8
+[18-Aug-2025 02:04:26 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php:2
+Stack trace:
+#0 /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php(2): mysqli->__construct('localhost', 'root', Object(SensitiveParameterValue), 'your_database')
+#1 {main}
+  thrown in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 2
+[18-Aug-2025 02:04:30 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php:2
+Stack trace:
+#0 /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php(2): mysqli->__construct('localhost', 'root', Object(SensitiveParameterValue), 'your_database')
+#1 {main}
+  thrown in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 2
+[18-Aug-2025 02:05:56 America/Boise] PHP Warning:  Undefined variable $conn in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 11
+[18-Aug-2025 02:05:56 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php:11
+Stack trace:
+#0 {main}
+  thrown in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 11
+[18-Aug-2025 02:05:59 America/Boise] PHP Warning:  Undefined variable $conn in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 11
+[18-Aug-2025 02:05:59 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php:11
+Stack trace:
+#0 {main}
+  thrown in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 11
+[18-Aug-2025 02:06:01 America/Boise] PHP Warning:  Undefined variable $conn in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 11
+[18-Aug-2025 02:06:01 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php:11
+Stack trace:
+#0 {main}
+  thrown in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 11
+[18-Aug-2025 02:06:32 America/Boise] PHP Warning:  Undefined variable $conn in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 14
+[18-Aug-2025 02:06:32 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php:14
+Stack trace:
+#0 {main}
+  thrown in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 14
+[18-Aug-2025 02:07:59 America/Boise] PHP Warning:  Undefined variable $conn in /home1/marcoluc/public_html/ardperfumes/npd/marketing_dashboard.php on line 9
+[18-Aug-2025 03:44:26 America/Boise] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/marcoluc/public_html/ardperfumes/npd/add_stats.php:28
+Stack trace:
+#0 /home1/marcoluc/public_html/ardperfumes/npd/add_stats.php(28): PDOStatement->execute(Array)
+#1 {main}
+  thrown in /home1/marcoluc/public_html/ardperfumes/npd/add_stats.php on line 28
+[19-Aug-2025 07:38:50 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 41
+[19-Aug-2025 07:38:53 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 41
+[19-Aug-2025 07:38:56 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 41
+[19-Aug-2025 07:38:58 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 41
+[19-Aug-2025 07:39:03 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 41
+[19-Aug-2025 07:39:06 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 41
+[19-Aug-2025 07:39:17 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 41
+[19-Aug-2025 07:39:19 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 41
+[19-Aug-2025 07:39:26 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 41
+[19-Aug-2025 07:39:32 America/Boise] PHP Parse error:  syntax error, unexpected token "{" in /home1/marcoluc/public_html/ardperfumes/npd/dashboard.php on line 41
